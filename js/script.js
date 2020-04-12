@@ -1,7 +1,7 @@
 // TODO Webpack
 
-import * as THREE from '../node_modules/three/build/three.module.js';
-import { GLTFLoader } from '../node_modules/three/examples/jsm/loaders/GLTFLoader.js';
+// import * as THREE from '../node_modules/three/build/three.module.js';
+// import { GLTFLoader } from '../node_modules/three/examples/jsm/loaders/GLTFLoader.js';
 // import * as THREE from '.build/three.module.js';
 // var THREE = require('../node_modules/three/build/three');
 
@@ -31,16 +31,34 @@ var cube = new THREE.Mesh(geometry, material);
 var sphereGeom = new THREE.SphereGeometry();
 var sphereMat = new THREE.MeshLambertMaterial({ color: 0x0000ff });
 var sphere = new THREE.Mesh(sphereGeom, sphereMat);
-scene.add(sphere);
+// scene.add(sphere);
 
+// light
 var light = new THREE.PointLight(0xffffff, 1, 500);
 light.position.set(10, 0, 25);
 scene.add(light);
 
+// custom heart object
+var object;
+var loader = new THREE.GLTFLoader();
+loader.load('../heart.glb', (gltf) => {
+    object = gltf.scene;
+    scene.add(object);
+}, undefined, (error) => {
+    console.error(error);
+})
+
+let x, y, z;
+let r = 5;
+let t = 0.5;
 function animate() {
     requestAnimationFrame(animate);
-    // cube.rotation.x += .01;
-    // cube.rotation.y += .01;
+    t += 0.02;
+    x = r * Math.cos(t);
+    y = 0;
+    z = r * Math.sin(t);
+    camera.position.set(x, y, z);
+    camera.lookAt(0,0,0);
     renderer.render(scene, camera);
 }
 
