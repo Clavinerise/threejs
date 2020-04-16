@@ -5,6 +5,24 @@ function checkCollisionSpherePlane(sphere, plane) {
     
 }
 
+document.addEventListener("keydown", function(event) {
+    console.log(event.which);
+    switch(event.which) {
+        case 37:
+            sphere.position.x -= .1;
+            break;
+        case 38:
+            sphere.position.z -= .1;
+            break;
+        case 39:
+            sphere.position.x += .1;
+            break;
+        case 40:
+            sphere.position.z += .1;
+            break;
+    }
+})
+
 var velocity = 0.1;
 
 var scene = new THREE.Scene();
@@ -35,7 +53,7 @@ var sphereGeom = new THREE.SphereGeometry(0.5, 32, 32);
 var sphereMat = new THREE.MeshLambertMaterial({ color: 0x0000ff });
 var sphere = new THREE.Mesh(sphereGeom, sphereMat);
 scene.add(sphere);
-sphere.position.y = 5;
+sphere.position.y = .5;
 
 // light
 var light = new THREE.PointLight(0xffffff, 1, 500);
@@ -72,11 +90,13 @@ function animate() {
     // z = r * Math.sin(t);
     // camera.position.set(x, y, z);
     // camera.lookAt(0,0,0);
-    sphere.position.y -= velocity;
+    // sphere.position.y -= velocity;
 
-    if(sphere.position.y < 0.5 || sphere.position.y > 5) {
-        velocity = -velocity;
-    }
+    // if(sphere.position.y < 0.5 || sphere.position.y > 5) {
+    //     velocity = -velocity;
+    // }
+
+    // move ball with arrow keys
     renderer.render(scene, camera);
 }
 
