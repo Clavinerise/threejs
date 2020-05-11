@@ -6,7 +6,7 @@ function checkCollisionSpherePlane(sphere, plane) {
 }
 
 document.addEventListener("keydown", function(event) {
-    console.log(event.which);
+    // console.log(event.which);
     switch(event.which) {
         case 37:
             sphere.position.x -= .1;
@@ -21,21 +21,23 @@ document.addEventListener("keydown", function(event) {
             sphere.position.z += .1;
             break;
     }
-})
+});
 
 var velocity = 0.1;
-
+function height() {
+    return window.innerHeight * .9
+}
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth / height(), 0.1, 1000);
 
 var renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setSize(window.innerWidth, height());
 renderer.setClearColor("#eeeeee");
 document.body.appendChild(renderer.domElement);
 
 window.addEventListener('resize', () => {
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    camera.aspect = window.innerWidth / window.innerHeight;
+    renderer.setSize(window.innerWidth, height());
+    camera.aspect = window.innerWidth / height();
     camera.updateProjectionMatrix();
 })
 
@@ -50,7 +52,7 @@ var cube = new THREE.Mesh(geometry, material);
 
 // sphere
 var sphereGeom = new THREE.SphereGeometry(0.5, 32, 32);
-var sphereMat = new THREE.MeshLambertMaterial({ color: 0x0000ff });
+var sphereMat = new THREE.MeshLambertMaterial({ color: 0x222222 });
 var sphere = new THREE.Mesh(sphereGeom, sphereMat);
 scene.add(sphere);
 sphere.position.y = .5;
@@ -71,7 +73,7 @@ loader.load('../heart.glb', (gltf) => {
 })
 
 // plane
-var planeGeom = new THREE.PlaneGeometry(5, 5);
+var planeGeom = new THREE.PlaneGeometry(20, 10);
 var planeMat = new THREE.MeshBasicMaterial({ color: 0x146894, side: THREE.DoubleSide });
 var plane = new THREE.Mesh(planeGeom, planeMat);
 plane.rotation.x = Math.PI / 2;
@@ -96,7 +98,7 @@ function animate() {
     //     velocity = -velocity;
     // }
 
-    // move ball with arrow keys
+    // move ball with arrow keysw
     renderer.render(scene, camera);
 }
 
